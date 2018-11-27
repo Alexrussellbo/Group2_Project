@@ -16,7 +16,8 @@ install.packages("corrploth")
   - [R/r_part.html](./R/r_part.html) : html file for r section.
 
 ### Stata
-  In order to run the bfido.do file, we need to first download the file bfi.dta then we have to search fapara package and install it by clicking the first link.
+In order to run the bfido.do file, we need to first download the file bfi.dta then we have to search fapara package and install it by clicking the first link.
+
   - [Stata/Stata_part.Rmd](./Stata/Stata_part.do) : Do files.
   - [Stata/Stata_part.Rmd](./Stata/Stata_part.Rmd) : Rmarkown to html.
   - [Stata/Stata_part.html](./Stata/Stata_part.html) : html file for Stata section.
@@ -29,10 +30,11 @@ install.packages("corrploth")
 
 
 ### Draft for final
-    Install  reticulate r-packages first.
-	```r
-	install.packages("reticulate")
-	```
+Install  reticulate r-packages first.
+
+```r
+install.packages("reticulate")
+```
   - [mydata.csv](./mydata.csv) 
   - [final_draft.Rmd](./final_draft.Rmd) : unfinished Rmarkown to html.
   - [final_draft.html](./final_draft..html) : html file for overall.
