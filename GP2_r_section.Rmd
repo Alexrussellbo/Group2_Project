@@ -304,12 +304,25 @@ From the factor loadings, we can see that the results are both good. When the nu
 
 ## STATA {.tabset}
 
-(tab content)
+### Principle components extraction
+We first apply pcf directly to the 25 columns of our bfi data, then do screeplot and parallel analysis
+
+![eigenvalues](table1.png)
+
+### Scree Plot to find eigenvalues greater than 1
+We have 6 eigenvalues greater than 1, which indicates 6 factors
+
+![Scree Plot](scree.png)
 
 
+![Parallel Analysis](parallel.png)
+5 of the observed eigenvalues are greater than the simulated eigenvalues, so we use 5 factors instead
+After limiting the facotrs to 5 and rotating factors to faciliate interpretation, we got 5 factors. Factor 1 has N1-N5, Factor2 has E1-E5, Factor 3 has C1-C5, Factor 4 has A1-A5, Factor 5 has O1-O5.
 
+![](picture1.png)
+### KMO
 
-
-
+The KMO value= 0.8486 is greater than 0.5, the minimum acceptable value.
+![](kmo.png)
 
 
