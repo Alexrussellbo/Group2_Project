@@ -18,7 +18,7 @@ install.packages("corrploth")
 ### Stata
 In order to run the bfido.do file, we need to first download the file bfi.dta then we have to search fapara package and install it by clicking the first link.
 
-  - [Stata/Stata_part.Rmd](./Stata/Stata_part.do) : Do files.
+  - [Stata/Stata_part.do](./Stata/Stata_part.do) : Do files.
   - [Stata/Stata_part.Rmd](./Stata/Stata_part.Rmd) : Rmarkown to html.
   - [Stata/Stata_part.html](./Stata/Stata_part.html) : html file for Stata section.
 
