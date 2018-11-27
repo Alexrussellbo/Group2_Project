@@ -38,7 +38,7 @@ leg.get_frame().set_alpha(0.4)
 leg.draggable(state=True)
 plt.show()
 ```
-![Caption for the picture.](scree.png)
+![Caption for the picture.](scree_python.png)
 
 Therefore, we should choose the number of factors to be 4, but the eigenvlue corresponding to factor 5 is really close to 5, so we perform factor analysis for both cases.
 
