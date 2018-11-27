@@ -3,14 +3,14 @@
 This repo contains group2 project files such as .Rmd, .html, .R, .png and .csv.
 
 ### R
-	In order to run r_part.R and r_part.Rmd successfully, please firstly install several r-packages if you did not install them before.
+In order to run r_part.R and r_part.Rmd successfully, please firstly install several r-packages if you did not install them before.
 
-	```r
-	install.packages("psych")
-	install.packages("GPArotation")
-	install.packages("tidyverse")
-	install.packages("corrploth")
-	```
+```r
+install.packages("psych")
+install.packages("GPArotation")
+install.packages("tidyverse")
+install.packages("corrploth")
+```
   - [R/r_part.R](./R/r_part.R) : For R scripts.
   - [R/r_part.Rmd](./R/r_part.Rmd) : Rmarkown to html.
   - [R/r_part.html](./R/r_part.html) : html file for r section.
