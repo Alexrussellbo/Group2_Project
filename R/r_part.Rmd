@@ -66,7 +66,7 @@ desp
 sum(complete.cases(bfi[1:25]))
 ```
 
-Each item corresponds to one variable whose values are integers from 1 to 6. If we remove the cases with no missing values, there are 2436 cases, about 13% of the original ones. According to the [criteria](A. L. Comfrey and H. B. Lee, “A First Course in Factor Analysis,” Lawrence Erlbaum Associates, Hillsdale, 1992.) of sample size adequacy: sample size 50 is very poor, 100 poor, 200 fair, 300 good, 500 very good, and more than 1,000 excellent. Therefore, our sample size after removal is adequate for our purposes.
+Each item corresponds to one variable whose values are integers from 1 to 6. If we remove the cases with no missing values, there are 2436 cases, about 13% of the original ones. According to the [criteria](https://pareonline.net/getvn.asp?n=11&v=9) of sample size adequacy: sample size 50 is very poor, 100 poor, 200 fair, 300 good, 500 very good, and more than 1,000 excellent. Therefore, our sample size after removal is adequate for our purposes.
 
 
 
@@ -82,7 +82,7 @@ Based on the correlation matrix figure above, we observe several correlations ar
 
 ## R {.tabset}
 
-### Checking of adequacy of factor analysis
+### Adequacy 
 There are some methods to check the adequacy of factor analysis. In this project, we adopt two of them as follow.
 
 ####1. Kaiser-Meyer-Olkin (KMO) 
@@ -101,7 +101,8 @@ cortest.bartlett(mydata)
 As we can see, the p-value of this test is significant, which means some of off-diagonal correlations are nonzero. It further suggests it is necessary to go ahead with factor analysis.
 
 
-###  Determining the Number of Factors to Extract
+### Number of Factors
+There are several ways to determine the number of factors. Now, we use two ways below.
 ####1. Screeplot
 In [screeplot](https://www.researchgate.net/publication/276934102_The_Scree_Test_and_the_Number_of_Factors_a_Dynamic_Graphics_Approach), eigenvalues of correlation matrix represent variances explained by each factor (sometimes sums of squared factor loadings are used instead). The adequate number of factors is before the sudden downward inflextion of the plot. Eigenvalues sum to the number of items, so an eigenvalue more than 1 is more informative than a single average item.
 ```{r scree_plot, echo = TRUE, eval = TRUE, message=FALSE}
@@ -122,11 +123,11 @@ From Parallel Analysis scree plot, it is obvious that the six factors construct 
 Combined results with two methods mentioned above, we should compare 4, 5 and 6 factors cases and find out which case is the most intepretable.
 
 
-###  Conducting Factor Analysis
-The function **fa.diagram** only shows the factor loadings greater than 0.1. It is easy to determine which one is the most interpretable. Let's get started with 4 factors by *varimax* rotation method. 
+### Factor Analysis
+The function **fa.diagram** only shows the factor loadings greater than 0.3. It is easy to determine which one is the most interpretable. Let's get started with 4 factors by *varimax* rotation method. 
 ```{r factor4, echo = TRUE, eval = TRUE, message=FALSE}
 fa4 = fa(mydata, nfactors = 4, fm="pa", max.iter = 100, rotate = "varimax")
-fa.diagram(fa4, main = "# factors = 4")
+fa.diagram(fa4, main = "# factors = 4", cut = .3)
 ```
 
 As we can see, A1 and O4 do not have more dependence on each of these four factors than other items. It motivated us to try more factors.
@@ -134,7 +135,7 @@ As we can see, A1 and O4 do not have more dependence on each of these four facto
 
 ```{r factor6, echo = TRUE, eval = TRUE, message=FALSE}
 fa6 = fa(mydata, nfactors = 6, fm="pa", max.iter = 100, rotate = "varimax")
-fa.diagram(fa6, main = "# factors = 6")
+fa.diagram(fa6, main = "# factors = 6", cut = .3)
 ```
 
 Here is the factor analysis with 6 factors. No items have strong relationship with the sixth factor. Therefore, we finally try the anaylsis with 5 factors.
@@ -142,17 +143,17 @@ Here is the factor analysis with 6 factors. No items have strong relationship wi
 
 ```{r factor5, echo = TRUE, eval = TRUE, message=FALSE}
 fa5 = fa(mydata, nfactors = 5, fm="pa", max.iter = 100, rotate = "varimax")
-fa.diagram(fa5, main = "# factors = 5")
+fa.diagram(fa5, main = "# factors = 5", cut = .3)
 
 ```
 
 With 5 factors, it is easy to see each factors corresponse to five different items, which indicates it is more interpretable.
 
 
-### Detailed analysis with 5 factors
+### Conclusions
 
 ####Factor Loadings
-Below are the factor loadings with 5 factors cases. In this output, we can also see the factor loadings less than 0.1.
+Below are the factor loadings with 5 factors cases. In this output, we can also see the factor loadings less than 0.3.
 ```{r loadings, echo = TRUE, eval = TRUE, message=FALSE}
 print(fa5$loadings, cutoff=0, digits=3)
 ```
@@ -185,11 +186,12 @@ as.tibble(com_matrix) %>%
   geom_vline(xintercept = 6, linetype="dotted", color = "red", size=1) +
   xlab("Number of Factors") + ylab("Communalities")
 ```
+
 As we can see, when the number of factors is larger than 5 or 6, there are no obvious increases in communatities. It further illustrates 5 factors are necessary for this analysis.
 
 ####Percentage of Variance Accounted For
 We can use the eigenvalues to calculate the percentage of variance accounted for by each of the factors.
-```{r var_2, echo = TRUE, eval = TRUE, message=FALSE}
+```{r var_2, echo = TRUE, eval = FALSE, message=FALSE}
 nfactors = 5
 fa5 = fa(mydata, nfactors = nfactors, fm="pa", max.iter = 100, rotate = "varimax")
 var_per = 100*fa5$values[1:nfactors]/sum(fa5$values[1:nfactors])
@@ -197,20 +199,9 @@ cum_var = cumsum(var_per)
 tb = as.data.frame(cbind(Var = var_per, Cum.var = cum_var))
 tb %>%
   transmute(Factor = paste0('factor',1:nfactors), 
-            Var = sprintf('%4.2f%%', Var),
-            Cum.var = sprintf('%4.2f%%', Cum.var)) %>%
-  knitr::kable()
+            Var = sprintf('%4.2f%%', Var)) 
 ```
 
-
-####Factor.plot
-```{r plot, echo = TRUE, eval = TRUE, message=FALSE}
-factor.plot(fa5, labels = rownames(fa5$loadings))
-```
-
-
-
-### Conclusions of Factor Analysis
 The Factor Analysis has thus identified 5 putative factors that affect 25 self-report personality itemss. They can be categorized as follow:
 
 | No. | Factors           | Main Items         | Proportion of explained variability |
@@ -220,7 +211,6 @@ The Factor Analysis has thus identified 5 putative factors that affect 25 self-r
 | 3   | Extraversion      | E1, E2, E3, E4, E5 | 14.62%                              |
 | 4   | Neuroticism       | N1, N2, N3, N4, N5 | 11.50%                              |
 | 5   | Openness          | O1, O2, O3, O4, O5 | 9.02%                               |
-
 
 
 ## Python {.tabset}
