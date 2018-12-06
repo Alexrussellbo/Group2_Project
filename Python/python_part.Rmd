@@ -1,0 +1,107 @@
+---
+title: "STATS 506 Group Report ---Python part"
+author: 'Jiahao Li (uniqname: martinli)'
+output: html_document
+---
+
+
+We firstly load the dataset. 
+Firstly we select out the first 25 columns that we plan to implement factor analysis on.
+Then, the rows containing missing values are deleted.
+```{python, python.reticulate=FALSE}
+import pandas as pd
+df = pd.read_csv('bfi.csv')
+del df['age']
+del df['gender']
+del df['education']
+del df['Unnamed: 0']
+df=df.dropna()
+print(df)
+```
+
+Before inplementing factor analysis, the number of factors should be determined. Here we make a Scree plot and choose the number of factors to be the largest number that corresponds to a Eigenvalue larger than 1, that's a rule of thumb.
+There is a direct function called scree() in R to directly make this plot and we We take the source code of that function and translate it into python codes to calculate the eigenvalues corresponding to factors. 
+
+```
+cor = mat(df.corr())
+w,v = np.linalg.eig(cor)
+nvar=25
+tot=np.sum(w)
+w=(nvar/tot)*w
+cor=np.dot(np.dot(v,np.diag(w)),v.transpose())
+fill_diagonal(cor, 1-1/cor.I.diagonal()) 
+w,_ = np.linalg.eig(cor)
+```
+
+Then we make the plot
+```
+fig = plt.figure(figsize=(8,5))
+plt.plot(range(1,len(w)+1), w, 'ro-', linewidth=2)
+plt.axhline(y=1, color='b', linestyle='-')
+plt.title('Scree Plot')
+plt.xlabel('Number of factors')
+plt.ylabel('Eigenvalues of factors')
+leg = plt.legend(['Eigenvalues'], loc='best', borderpad=0.3, 
+                 shadow=False, prop=matplotlib.font_manager.FontProperties(size='small'),
+                 markerscale=0.4)
+leg.get_frame().set_alpha(0.4)
+leg.draggable(state=True)
+plt.show()
+```
+![Caption for the picture.](scree.png)
+
+There are some difference between the results in R and python, the eigenvalues we get in python are a little larger.That's because the R function scree() does some adjustion to the correlation matrix before calculating eigen value. we can't easily figure out exactly what it does from source codes because scree() calls another function which again calls other functions. Also there is difference in precision between two programming language, which is a cause of the difference.
+Also, there is no function in python that can directly do the parallel test in Python and it would take really much time to implement it in Python, so we just don't do this.
+From this plot, we should choose the number of factors to be 4, but the eigenvlues corresponding to factor 5 is really close to 1, so we perform factor analysis for both cases, that is with 4 factors and with 5 factors, and compare the results. Note that since eigenvalues we get in R are a little smaller, we choose the number of factors to be 4,5 and 6 for R part.
+
+```
+from factor_analyzer import FactorAnalyzer
+fa = FactorAnalyzer()
+fa.analyze(df, 4, rotation="varimax")
+print(fa.loadings)
+```
+
+```{python echo=FALSE, python.reticulate=FALSE}
+import pandas as pd
+from factor_analyzer import FactorAnalyzer
+csv_data = pd.read_csv('mydata.csv')
+df = pd.DataFrame(csv_data)
+del df['Unnamed: 0']
+fa = FactorAnalyzer()
+fa.analyze(df, 4, rotation="varimax")
+print(fa.loadings)
+```
+
+
+```
+from factor_analyzer import FactorAnalyzer
+fa = FactorAnalyzer()
+fa.analyze(df, 5, rotation="varimax")
+print(fa.loadings)
+```
+```{python echo=FALSE, python.reticulate=FALSE}
+import pandas as pd
+from factor_analyzer import FactorAnalyzer
+csv_data = pd.read_csv('mydata.csv')
+df = pd.DataFrame(csv_data)
+del df['Unnamed: 0']
+fa = FactorAnalyzer()
+fa.analyze(df, 5, rotation="varimax")
+print(fa.loadings)
+```
+From the factor loadings, we can see that the result of factor analysis with 5 factors is good. When the number of factor is chosen to be 5, Factor 1 is mainly composed of E1,E2,E3,E4,E5. Factor 2 is mainly composed of N1,N2,N3,N4,N5. Factor 3 is mainly composed of C1,C2,C3,C4,C5. Factor 4 is mainly composed of O1,O2,O3,O4,O5. Factor 5 is mainly composed of A1,A2,A3,A4,A5. This fits well with the natural of raw column, because the columns with the same initial letter are the answers to questions from the same category.
+If we choose  the number of factor to be 4, factor 1 is composed of both E1,E2,E3,E4,E5 and A1,A2,A3,A4,A5, meaning that it categorize those two groups of columns together and account for them with a single factor. It shows that columns with initial E and columns with initial A are related in some aspects. However, we notice that the absolute value of factor loadings corresponding to A1 are all smaller than 0.25, meaning that column A1 is not well explained by any one of the factors. But if we take the number of factor to be 5, the obsolute value of the largest factor loading corresponding to each original column is larger than 0.4. That means a large amount of each column is explained by a factor, the columns are well categoried. Therefore, choosing the number of factors to be 5 is more reasonable.
+
+
+In conclusion, five is the most reasonable number of factors. With this number of factors, the columns that are originally correlated would be mostly accounted by the same factor, meaning that the structure of the original data is successfully figured out by factor analysis. 
+Maybe later we can look deeper into the source code of scree() function in R to see what exactly changes it does to the correlation matrix so that we can get the same result from python and R.
+
+
+
+
+
+
+
+
+
+
