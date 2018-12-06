@@ -5,11 +5,11 @@ This repo contains group2 project files such as .Rmd, .html, .R, .png and .csv.
 ### Final
 To get the completed version html, Final.html should be executed along with other html files.
  
- -[Final/Final.html]: Home page
- -[Final/data.html]: Data page
- -[Final/r_part.html]: R page
- -[Final/python_part.html]: Python page
- -[Final/stata_part.html]: STATA page
+ - [Final/Final.html]: Home page
+ - [Final/data.html]: Data page
+ - [Final/r_part.html]: R page
+ - [Final/python_part.html]: Python page
+ - [Final/stata_part.html]: STATA page
 
 ### R
 In order to run r_part.R and r_part.Rmd successfully, please firstly install several r-packages if you did not install them before.
