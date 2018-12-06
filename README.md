@@ -2,15 +2,6 @@
 
 This repo contains group2 project files such as .Rmd, .html, .R, .png and .csv.
 
-### Final
-To get the completed version html, Final.html should be executed along with other html files.
- 
- - [Final/Final.html](./Final/Final.html): Home page
- - [Final/data.html](./Final/data.html): Data page
- - [Final/r_part.html](./Final/r_part.html): R page
- - [Final/python_part.html](./Final/python_part.html): Python page
- - [Final/stata_part.html](./Final/stata_part.html): STATA page
-
 ### R
 In order to run r_part.R and r_part.Rmd successfully, please firstly install several r-packages if you did not install them before.
 
@@ -27,9 +18,9 @@ install.packages("corrploth")
 ### Stata
 In order to run the bfido.do file, we need to first download the file bfi.dta then we have to search fapara package and install it by clicking the first link.
 
-  - [Stata/Stata_part.do](./Stata/Stata_part.do) : Do files.
-  - [Stata/Stata_part.Rmd](./Stata/Stata_part.Rmd) : Rmarkown to html.
-  - [Stata/Stata_part.html](./Stata/Stata_part.html) : html file for Stata section.
+  - [Stata/stata_part.do](./Stata/Stata_part.do) : Do files.
+  - [Stata/stata_part.Rmd](./Stata/Stata_part.Rmd) : Rmarkown to html.
+  - [Stata/stata_part.html](./Stata/Stata_part.html) : html file for Stata section.
 
 
 ### Python
@@ -38,7 +29,7 @@ In order to run the bfido.do file, we need to first download the file bfi.dta th
   - [Python/python_part.html](./Python/python_part.html) : html file for Python section.
 
 
-### Draft for final
+### final
 Install  reticulate r-packages first.
 
 ```r
