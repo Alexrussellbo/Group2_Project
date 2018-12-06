@@ -19,8 +19,8 @@ install.packages("corrploth")
 In order to run the bfido.do file, we need to first download the file bfi.dta then we have to search fapara package and install it by clicking the first link.
 
   - [Stata/bfido.do](./Stata/bfido.do) : Do files.
-  - [Stata/stata_part.Rmd](./Stata/Stata_part.Rmd) : Rmarkown to html.
-  - [Stata/stata_part.html](./Stata/Stata_part.html) : html file for Stata section.
+  - [Stata/stata_part.Rmd](./Stata/stata_part.Rmd) : Rmarkown to html.
+  - [Stata/stata_part.html](./Stata/stata_part.html) : html file for Stata section.
 
 
 ### Python
@@ -36,5 +36,5 @@ Install  reticulate r-packages first.
 install.packages("reticulate")
 ```
   - [mydata.csv](./mydata.csv) 
-  - [Final.Rmd](./final_draft.Rmd) : Rmarkown to html.
-  - [Final.html](./final_draft..html) : html file for overall.
+  - [Final.Rmd](./Final.Rmd) : Rmarkown to html.
+  - [Final.html](./Final..html) : html file for overall.
