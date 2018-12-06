@@ -1,86 +1,27 @@
 ---
-title: "Factor Analysis"
-author: 'Group 2: Jiahao Li, Minjing Yang, Bo Liu'
-date: "11/25/2018"
-output: 
-   html_document:
-    toc: true
-    toc_float: true
-    theme: united
-    highlight: tango
+title: "R"
+author: 'Bo Liu (alexliu@umich.edu)'
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Introduction to Factor Analysis
-Factor Analysis is a method for modeling observed variables. It is commonly used for data reduction. The key concept of Factor Analysis is that some of variables have similar patterns because they are all related to a factors (latent variables) that cannot be directly measured. The factors typically are viewed as broad concepts or ideas that may describe an observed phenomenon.
 
-####Mathematical Models
-Suppose we have a set of p observable random variables, $X_1, X_2, ..., X_p$, and they are linearly related to m latent variables (factors), $F_1, F_2, ..., F_m$, where $m<p$. They are expressed below
-$$X_1 = l_{11}F_1+l_{12}F_2+ \cdots +l_{1m}F_m + \epsilon_1$$
-$$X_2 = l_{21}F_1+l_{22}F_2+ \cdots +l_{2m}F_m + \epsilon_2$$
-$$\vdots$$
+## Description of R-packages
 
-$$X_p = l_{p1}F_1+l_{p2}F_2+ \cdots +l_{pm}F_m + \epsilon_p$$
-
-Here $l_{ij}$ denotes the factor loading of $i^{th}$ variable on the $j^{th}$ factor. The
-$\epsilon_i$ means unique error variance of $i^{th}$ variable, which cannot be explained by extracted factors.
-
-Other assumptions are 
-
- + $Cov(F, \epsilon) = \mathbf{0}$.
- 
- + $Cov(\epsilon_i, \epsilon_j) = 0$, where $i,j = 1,2, ..., p$.
- 
- + $\mathbf{E}(F) = \mathbf{0}$.
- 
- + $Cov(F) = I$.
-
-#### Work on factor analysis
-
-+ Find the hidden factors behind observed variables: The hidden factors cannot measured directly, but can be interpretable.
-+ Estimate the factor loadings.
-+ Evaluate the factors we extracted.
-
-
-
-
-# Description of example data
-The dataset we work on is called [bfi](https://www.personality-project.org/r/html/bfi.html) from psych r-package. It consists of 2800 observations on the following 28 variables including 25 self-report personality items and three additional demographic variables (sex, education, and age). In this project, we plan to figure out the putative factors of the first 25 items in dataset.
+  + [psych](https://cran.r-project.org/web/packages/psych/index.html) : A package for personality, psychometric, and psychological research including ***fa***, ***fa.diagram***, ***fa.parallel*** functions for factor analysis.
+  + [tidyverse](https://www.rdocumentation.org/packages/tidyverse/versions/1.2.1): A set of packages for data processing.
 
 
 ```{r data_import, echo = TRUE, eval = TRUE, message=FALSE}
 library(psych)
-library(GPArotation)
 library(tidyverse)
-library(corrplot)
-mydata = bfi[1:25]
-desp = describe(mydata ) %>%
-  select(vars, n, mean, sd, median, min, max, range)
-desp
 ```
 
-```{r data_non_na, echo = TRUE, eval = TRUE, message=FALSE}
-sum(complete.cases(bfi[1:25]))
-```
 
-Each item corresponds to one variable whose values are integers from 1 to 6. If we remove the cases with no missing values, there are 2436 cases, about 13% of the original ones. According to the [criteria](https://pareonline.net/getvn.asp?n=11&v=9) of sample size adequacy: sample size 50 is very poor, 100 poor, 200 fair, 300 good, 500 very good, and more than 1,000 excellent. Therefore, our sample size after removal is adequate for our purposes.
-
-
-
-```{r data_cor, echo = TRUE, eval = TRUE, message=FALSE}
-mydata = bfi[1:25][complete.cases(bfi[1:25]),]
-corrplot(cor(mydata), type = "upper", tl.col = "darkblue", tl.srt = 45)
-```
-
-Based on the correlation matrix figure above, we observe several correlations are closed to 1 or -1 which means some of items are somewhat or even highly correlated. In this case, we used factor analysis to explore the structure of the relationships between variables and to determine whether these relationships can be explained by a smaller number of latent dimensions.
-
-
-# Factor Analysis {.tabset}
-
-## R {.tabset}
+## Conducting Factor Analysis {.tabset}
 
 ### Adequacy 
 There are some methods to check the adequacy of factor analysis. In this project, we adopt two of them as follow.
@@ -88,6 +29,7 @@ There are some methods to check the adequacy of factor analysis. In this project
 ####1. Kaiser-Meyer-Olkin (KMO) 
 [Kaiser-Meyer-Olkin](https://www.statisticshowto.datasciencecentral.com/kaiser-meyer-olkin/) (KMO) is the measure of sampling adequacy, which varies between 0 and 1. The values closed to 1.0 usually means that it is useful to process the data used by factor analysis. If the value is less than 0.50, the results of the factor analysis probably won't be very useful.
 ```{r test1_KMO, echo = TRUE, eval = TRUE, message=FALSE}
+mydata = bfi[1:25][complete.cases(bfi[1:25]),]
 KMO(mydata)
 ```
 Based on the results of KMO above, we observe the MSA for each item is greater than 0.74 and the overall MSA is 0.85, which illustrates it is useful if we use factor analysis on the data.
@@ -213,14 +155,6 @@ The Factor Analysis has thus identified 5 putative factors that affect 25 self-r
 | 5   | Openness          | O1, O2, O3, O4, O5 | 9.02%                               |
 
 
-## Python {.tabset}
-
-(tab content)
-
-
-## STATA {.tabset}
-
-(tab content)
 
 
 
