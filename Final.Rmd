@@ -434,10 +434,10 @@ After limiting the facotrs to 5 and rotating factors to faciliate interpretation
 
 
 # Things to consider
- + Based on the final factor loadings obtained by three aproaches, they are nearly the same but it seems that the variables has much dependence on factors using Stata than R and Python. Later we may figure out the reasons why it happens.
- + We use almost the same methods to determining the number of factors in three ways, but there are different results coming out. Fortunately, our final best number of factors is included in all three sets of results. We hope to consider further why the difference comes out, especially the difference from scree plot between R and Python.
+ + Based on the final factor loadings obtained by three approaches, they are nearly the same but it seems that the variables have much dependence on factors using Stata than R and Python. Later we may figure out the reasons why it happens.
+ + We use almost the same methods to determine the number of factors in three ways, but there are different results coming out. Fortunately, our final best number of factors is included in all three sets of results. We hope to consider further why the difference comes out, especially the difference in scree plot between R and Python.
  
- + We all conduct factor analysis by "varimax" rotation method. What if we utilize other kinds of rotation, such as "quartimax" , "bentlerT", "equamax", etc. Do they change the results dramatically or not?
+ + We all conduct factor analysis by "varimax" rotation method. What if we utilize other kinds of rotation, such as "quartimax" , "bentlerT", "equamax" and etc. Do they change the results dramatically or not?
  + In this case, the type of factor analysis we use is exploratory factor anaylsis (EFA). There is another type of factor analysis , Confirmatory factor analysis (CFA) which is a more complex approach that tests the hypothesis that the items are associated with specific factors. So what if we do the CFA on the example dataset?
 
 #Reference
@@ -445,7 +445,7 @@ After limiting the facotrs to 5 and rotating factors to faciliate interpretation
   + Revelle, W. (2018) [psych](https://CRAN.R-project.org/package=psych): Procedures for Personality and Psychological Research,
   Northwestern University, Evanston, Illinois, USA.
 
-  + Phil Ender. Statistical Consulting Group.  UCLA: [Academic Technology Services](https://stats.idre.ucla.edu/stat/stata/ado/analysis)
+  + Phil Ender. Statistical Consulting Group.  UCLA: [Academic Technology Services](https://stats.idre.ucla.edu/stata/seminars/notes15/)
   
   + A. Alexander Beaujean, Baylor University. [Factor Analysis using R](https://pareonline.net/pdf/v18n4.pdf) 
   
